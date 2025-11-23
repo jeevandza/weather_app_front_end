@@ -1,24 +1,45 @@
 import "./App.css";
+import { useState } from "react";
 import { useWeather } from "./utils/hooks";
-import { Loader, WeatherCard } from "./components";
-import { NoDataFound } from "./components/noDataFound";
+import { Loader, WeatherCard, CountryCitySelector } from "./components";
+import { transformForecastData, transformChartData } from "./utils/helpers";
 
 function App() {
-  const { isWeatherDataLoading, weatherData } = useWeather();
+  const {
+    isWeatherDataLoading,
+    weatherData,
+    isForecastDataLoading,
+    forecastData,
+  } = useWeather();
+  const [unit, setUnit] = useState("fahrenheit");
 
+  /**
+   * Current weather data
+   */
   const weatherDataItem = weatherData?.data;
 
-  console.log(weatherDataItem, "weatherData");
+  /**
+   * Forecast weather data
+   */
+  const forecastApiData = forecastData
+    ? transformForecastData(forecastData)
+    : [];
+  const chartDataApiData = forecastData ? transformChartData(forecastData) : [];
+
+  console.log(forecastData, "forecastData");
 
   return (
     <div>
-      {isWeatherDataLoading || !weatherDataItem ? (
-        <Loader />
-      ) : weatherDataItem?.location ? (
-        <WeatherCard weatherData={weatherDataItem} />
-      ) : (
-        <NoDataFound title="No Weather Data" description="Unable to fetch weather data. Please try again." />
-      )}
+      <CountryCitySelector onSelect={() => null} />
+      <WeatherCard
+        isWeatherDataLoading={isWeatherDataLoading}
+        isForeCastLoading={isForecastDataLoading}
+        weatherData={weatherDataItem}
+        forecastData={forecastApiData}
+        chartData={chartDataApiData}
+        unit={unit}
+        onUnitChange={setUnit}
+      />
     </div>
   );
 }

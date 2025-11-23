@@ -4,7 +4,7 @@ import { useSnackbar } from "../index";
 export function useFetch(apiFn) {
   const { showSnackbar } = useSnackbar();
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true); 
 
   const fetchData = useCallback(
     async (...args) => {
@@ -15,12 +15,12 @@ export function useFetch(apiFn) {
         setData(response);
         return response;
       } catch (err) {
-        showSnackbar(`Failed to fetch :${err}`, "error");
+        showSnackbar(`Failed to fetch: ${err.message || err}`, "error");
       } finally {
         setLoading(false);
       }
     },
-    [apiFn]
+    [apiFn, showSnackbar]
   );
 
   return {
