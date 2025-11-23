@@ -2,11 +2,11 @@
  * Forecast modified data
  */
 export function transformForecastData(apiData) {
-  if (!apiData?.data?.forecast?.forecastday) return [];
+  if (!apiData?.data?.forecast_data) return [];
 
   const tz = apiData.data.location.tz_id; 
 
-  return apiData.data.forecast.forecastday.slice(0, 7).map((day) => ({
+  return apiData.data.forecast_data.slice(0, 7).map((day) => ({
     date: new Date(day.date + "T00:00:00").toLocaleDateString(undefined, {
       weekday: "short",
       timeZone: tz,
@@ -23,7 +23,7 @@ export function transformForecastData(apiData) {
  * Chart modified data
  */
 export function transformChartData(apiData) {
-  const hourlyData = apiData?.data?.forecast?.forecastday?.[0]?.hour;
+  const hourlyData = apiData?.data?.forecast_data?.[0]?.hour;
   if (!hourlyData) return [];
 
   const tz = apiData.data.location.tz_id;

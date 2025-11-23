@@ -14,4 +14,32 @@ const API = {
   },
 };
 
-export { API_ENDPOINT, API };
+
+
+/**
+ * 
+ */
+const AVAILABLE_CITIES = [
+  { name: "New York" },
+  { name: "London" },
+  { name: "Paris" },
+  { name: "Tokyo" },
+  { name: "Dubai" },
+  { name: "Sydney" },
+  { name: "Toronto" },
+  { name: "Berlin" },
+  { name: "Madrid" },
+  { name: "Singapore" },
+  { name: "Hong Kong" },
+  { name: "Bangkok" },
+  { name: "Istanbul" },
+  { name: "Moscow" },
+  { name: "Mumbai" },
+  { name: "Delhi" },
+  { name: "Shanghai" },
+  { name: "Los Angeles" },
+  { name: "Chicago" },
+  { name: "San Francisco" },
+];
+
+export { API_ENDPOINT, API, AVAILABLE_CITIES };

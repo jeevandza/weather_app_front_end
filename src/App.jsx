@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import { useWeather } from "./utils/hooks";
-import { Loader, WeatherCard, CountryCitySelector } from "./components";
+import {  WeatherCard, CountryCitySelector } from "./components";
 import { transformForecastData, transformChartData } from "./utils/helpers";
 
 function App() {
@@ -10,6 +10,14 @@ function App() {
     weatherData,
     isForecastDataLoading,
     forecastData,
+
+    cities,
+    selectedCity,
+    recentCities,
+    showHistory,
+    handleCityChange,
+    handleShowHistory,
+    handleClearHistory
   } = useWeather();
   const [unit, setUnit] = useState("fahrenheit");
 
@@ -17,6 +25,8 @@ function App() {
    * Current weather data
    */
   const weatherDataItem = weatherData?.data;
+
+  console.log(forecastData, "forecastData")
 
   /**
    * Forecast weather data
@@ -30,7 +40,16 @@ function App() {
 
   return (
     <div>
-      <CountryCitySelector onSelect={() => null} />
+      <CountryCitySelector
+        cities={cities}
+        selectedCity={selectedCity}
+        recentCities={recentCities}
+        showHistory={showHistory}
+        onCityChange={handleCityChange}
+        onShowHistory={handleShowHistory}
+        loading={isWeatherDataLoading}
+        onClearHistory={handleClearHistory}
+      />
       <WeatherCard
         isWeatherDataLoading={isWeatherDataLoading}
         isForeCastLoading={isForecastDataLoading}

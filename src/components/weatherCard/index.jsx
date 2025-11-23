@@ -18,7 +18,7 @@ export function WeatherCard({
     <div className="min-h-screen bg-gradient-to-br from-blue-400 via-blue-500 to-purple-600 p-4">
       <div className="max-w-6xl mx-auto space-y-6">
         {isWeatherDataLoading  ? (
-          <Loader />
+          <Loader variant="section" />
         ) : (
           <CurrentWeather
             weatherData={weatherData}
@@ -28,7 +28,7 @@ export function WeatherCard({
         )}
 
         {isForeCastLoading ? (
-          <Loader />
+          <Loader variant="section" />
         ) : (
           <ForecastAndCharts
             forecastData={forecastData}

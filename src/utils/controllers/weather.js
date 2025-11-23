@@ -11,6 +11,6 @@ export async function getWeatherData(q) {
  * Get forecast data
  */
 
-export async function getWeatherForecastData(q, type) {
-  return await api.GET(`/weather?q=${q}&type=${type}`);
+export async function getWeatherForecastData(city) {
+  return await api.GET(`/forecast?q=${city}`);
 }
