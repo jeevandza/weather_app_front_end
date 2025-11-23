@@ -8,6 +8,8 @@ import { UnitToggle } from "./unitToggle";
 import { CountryCitySelector } from "./countryCitySelector";
 import { CurrentWeather } from "./currentWeather";
 import { ForecastAndCharts } from "./forecastAndCharts";
+import { Layout } from "./layout";
+import { NotFoundPage } from "./notFoundPage";
 
 export {
   WeatherCard,
@@ -19,5 +21,7 @@ export {
   UnitToggle,
   CountryCitySelector,
   CurrentWeather,
-  ForecastAndCharts
+  ForecastAndCharts,
+  Layout,
+  NotFoundPage,
 };

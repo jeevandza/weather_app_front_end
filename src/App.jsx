@@ -1,65 +1,27 @@
 import "./App.css";
-import { useState } from "react";
-import { useWeather } from "./utils/hooks";
-import {  WeatherCard, CountryCitySelector } from "./components";
-import { transformForecastData, transformChartData } from "./utils/helpers";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { Home, Weather, AboutMe, ProjectShowcase } from "./pages";
+import { Layout, NotFoundPage } from "./components";
 
 function App() {
-  const {
-    isWeatherDataLoading,
-    weatherData,
-    isForecastDataLoading,
-    forecastData,
-
-    cities,
-    selectedCity,
-    recentCities,
-    showHistory,
-    handleCityChange,
-    handleShowHistory,
-    handleClearHistory
-  } = useWeather();
-  const [unit, setUnit] = useState("fahrenheit");
-
-  /**
-   * Current weather data
-   */
-  const weatherDataItem = weatherData?.data;
-
-  console.log(forecastData, "forecastData")
-
-  /**
-   * Forecast weather data
-   */
-  const forecastApiData = forecastData
-    ? transformForecastData(forecastData)
-    : [];
-  const chartDataApiData = forecastData ? transformChartData(forecastData) : [];
-
-  console.log(forecastData, "forecastData");
-
   return (
-    <div>
-      <CountryCitySelector
-        cities={cities}
-        selectedCity={selectedCity}
-        recentCities={recentCities}
-        showHistory={showHistory}
-        onCityChange={handleCityChange}
-        onShowHistory={handleShowHistory}
-        loading={isWeatherDataLoading}
-        onClearHistory={handleClearHistory}
-      />
-      <WeatherCard
-        isWeatherDataLoading={isWeatherDataLoading}
-        isForeCastLoading={isForecastDataLoading}
-        weatherData={weatherDataItem}
-        forecastData={forecastApiData}
-        chartData={chartDataApiData}
-        unit={unit}
-        onUnitChange={setUnit}
-      />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="weather" element={<Weather />} />
+          <Route path="learn-more" element={<ProjectShowcase />} />
+          <Route path="about-me" element={<AboutMe />} />
+          <Route path="404" element={<NotFoundPage />} />
+          <Route path="*" element={<Navigate to="/404" replace />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 

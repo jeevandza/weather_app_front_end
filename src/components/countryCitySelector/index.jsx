@@ -25,7 +25,6 @@ export function CountryCitySelector({
             <h2 className="text-lg md:text-xl font-bold text-white">Select City</h2>
           </div>
 
-          {/* City Input */}
           <div className="relative">
             <label className="block text-xs md:text-sm font-semibold text-blue-100 mb-2">
               City
@@ -57,11 +56,9 @@ export function CountryCitySelector({
               </div>
             </div>
 
-            {/* Dropdown - History & Cities */}
             {showHistory && (
               <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800 rounded-lg border border-slate-600 shadow-2xl z-50 max-h-64 overflow-y-auto">
                 
-                {/* Previously Searched */}
                 {recentCities.length > 0 && (
                   <>
                     <div className="sticky top-0 px-3 py-2 border-b border-slate-600 bg-slate-900 flex items-center justify-between">
@@ -94,7 +91,6 @@ export function CountryCitySelector({
                   </>
                 )}
 
-                {/* All Cities */}
                 <div className="py-2">
                   <div className="px-4 py-1">
                     <p className="text-xs font-semibold text-blue-300">All Cities</p>
@@ -120,7 +116,7 @@ export function CountryCitySelector({
             )}
           </div>
 
-          {/* Selected Info */}
+   
           {selectedCity && (
             <div className="mt-3 pt-3 border-t border-white/20 flex items-center gap-2 text-blue-50">
               <MapPin size={14} className="text-green-300" />

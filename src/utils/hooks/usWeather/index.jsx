@@ -100,11 +100,12 @@ function useWeatherContextProvider() {
   /**
    * On select city
    */
-  const handleCityChange = (city) => {
-    if (!city) return;
-    const formattedCity = city.charAt(0).toUpperCase() + city.slice(1);
-    setSelectedCity(formattedCity);
-  };
+ const handleCityChange = (city) => {
+  const formattedCity = city
+    ? city.charAt(0).toUpperCase() + city.slice(1)
+    : ""; 
+  setSelectedCity(formattedCity);
+};
 
   /**
    * Show previous history
