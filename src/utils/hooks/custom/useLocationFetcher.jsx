@@ -4,24 +4,16 @@ import { useSnackbar } from "../index";
 export function useLocationFetcher() {
   const { showSnackbar } = useSnackbar();
 
-  const [location, setLocation] = useState({
-    lat: null,
-    lon: null,
-  });
-
+  const [location, setLocation] = useState({ lat: null, lon: null });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
 
-    async function getIpFallback() {
+    const fallbackIP = async () => {
       try {
-        const res = await fetch("https://geolocation-db.com/json/");
-        if (!res.ok)
-          showSnackbar(
-            "Failed to trace your location, please allow your location",
-            "error"
-          );
+        const res = await fetch("https://ipapi.co/json/");
+        if (!res.ok) throw new Error("IP API failed");
 
         const data = await res.json();
 
@@ -32,42 +24,43 @@ export function useLocationFetcher() {
           });
           setLoading(false);
         }
-      } catch (e) {
+      } catch (err) {
         if (isMounted) {
           showSnackbar("Could not determine location", "error");
           setLoading(false);
         }
       }
-    }
+    };
 
-    function handleGeolocationSuccess(pos) {
-      if (isMounted) {
-        setLocation({
-          lat: pos.coords.latitude,
-          lon: pos.coords.longitude,
-        });
-        setLoading(false);
-      }
-    }
+    const handleGeoSuccess = (pos) => {
+      if (!isMounted) return;
 
-    function handleGeolocationError() {
-      getIpFallback();
-    }
+      setLocation({
+        lat: pos.coords.latitude,
+        lon: pos.coords.longitude,
+      });
 
-    if (navigator.geolocation) {
+      setLoading(false);
+    };
+
+    const handleGeoError = () => {
+      fallbackIP();
+    };
+
+    if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
-        handleGeolocationSuccess,
-        handleGeolocationError,
-        { timeout: 5000 }
+        handleGeoSuccess,
+        handleGeoError,
+        { timeout: 4000 }
       );
     } else {
-      getIpFallback();
+      fallbackIP();
     }
 
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [showSnackbar]);
 
   return { location, loading };
 }
